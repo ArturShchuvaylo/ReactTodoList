@@ -3,24 +3,24 @@ import React from 'react';
 import TodoListItem from '../todo-list-item';
 import './todo-list.css';
 
-const TodoList = ({ todos, onDeleted, onToggleImportant, onToggleDone }) => {
+const TodoList = ({ visible, onDelete, markDownImportant, markDownDone }) => {
 
-    const elements = todos.map((item) => {
-        const { id, ...itemProps } = item;
-
+    let elements = visible.map((item) => {
         return (
-            <li key={id} className="list-group-item">
-                <TodoListItem {...itemProps}
-                    onDeleted={() => onDeleted(id)}
-                    onToggleImportant={() => onToggleImportant(id)}
-                    onToggleDone={() => onToggleDone(id)} />
+            <li key={item.id} className="list-group-item">
+                <TodoListItem
+                    markDownDone={() => markDownDone(item.id,)}
+                    markDownImportant={() => markDownImportant(item.id)}
+                    onDelete={() => onDelete(item.id)} {...item} />
             </li>
-        );
-    });
-
+        )
+    }
+    )
     return (
         <ul className="list-group todo-list">
+
             {elements}
+
         </ul>
     );
 };

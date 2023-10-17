@@ -1,37 +1,40 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import "./item-add-form.css"
-export default class ItemAddForm extends Component {
+import uuid from 'react-uuid';
+const ItemAddForm = ({ addItem }) => {
 
-    state = {
-        label: ""
+    const [value, setValue] = useState('')
+
+    const onSubmit = (e) => {
+        e.preventDefault()
+        addItem(value)
+        setValue('');
     }
 
-    onSubmit = (event) => {
-        event.preventDefault();
-        if ((this.state.label.split('').join(' ')) * 1 != 0) {
-            this.props.onPush(this.state.label)
-        }
 
+    return (
 
-        this.setState({ label: "" })
-    }
-    render() {
-        return (
-            <form className="item-add-form d-flex"
-                onSubmit={this.onSubmit}>
-                <input
-                    type='text'
-                    className="form-control"
-                    onChange={(event) => this.setState({ label: event.target.value })}
-                    placeholder={'What else?'}
-                    value={this.state.label}
-                />
-                <button
-                    className="btn btn-otline-secondary"
-                >Add
-                </button>
-            </form>
-        )
-    }
+        <form
+            onSubmit={onSubmit}
+            className="item-add-form d-flex">
+            <input
+                type='text'
+                className="form-control"
+                value={value}
+                onChange={(event) => setValue(event.target.value)}
+                placeholder={'What else?'}
+            />
+            <button
+                className="btn btn-otline-secondary"
+
+            >
+                Add
+            </button>
+        </form >
+
+    )
+
 }
+
+export default ItemAddForm;
 
